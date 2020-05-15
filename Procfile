@@ -1,1 +1,1 @@
-web: gunicorn run:flaskr/init
+web: gunicorn app:flaskr/init
