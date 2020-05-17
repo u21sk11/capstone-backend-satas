@@ -15,12 +15,10 @@ def create_app(test_config=None):
         return response
     
     @app.route('/')
-    @cross_origin()
     def index():
         return jsonify({"message":"hello"})
 
     @app.route('/actors', methods=['GET'])
-    @cross_origin()
     def crud_actors():
         actors = Actor.query.all()
         actors_formatted = []
