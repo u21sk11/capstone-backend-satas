@@ -5,7 +5,7 @@ from models import set_up, Movie
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__)
-    set_up(app)
+    
     @app.route('/')
     def index():
         return jsonify({"message":"hello"})
