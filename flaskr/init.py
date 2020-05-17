@@ -1,10 +1,13 @@
-from flask import Flask
+from flask import Flask, request, abort, jsonify
 
-app = Flask(__name__)
+from models import set_up, Movie
 
-@app.route('/')
-def index():
-    return "Hello World!"
+def create_app(test_config=None):
+    # create and configure the app
+    app = Flask(__name__)
+    set_up(app)
+    @app.route('/')
+    def index():
+        return jsonify({"message":"hello"})
 
-if __name__ == "__main__":
-    app.run()
+    return app
