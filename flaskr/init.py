@@ -52,7 +52,7 @@ def create_app(test_config=None):
         except ConnectionError:
             abort(503)
         
-        return jsonify({'success': true, 'actor': name})
+        return jsonify({'success': True, 'actor': name})
 
 
     @app.route('/movies', methods=['GET'])
