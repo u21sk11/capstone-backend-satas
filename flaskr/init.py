@@ -28,4 +28,16 @@ def create_app(test_config=None):
 
         return jsonify(actors_formatted)
 
+    @app.route('/movies', methods=['GET'])
+    def crud_movies():
+        movies_formatted = []
+        try:
+            movies = Actor.query.all()
+            for m in movies:
+                movies_formatted.append(m.format)
+        except ConnectionError:
+            abort(503)
+
+        return jsonify(movies_formatted)
+
     return app
