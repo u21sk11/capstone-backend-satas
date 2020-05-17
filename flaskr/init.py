@@ -31,7 +31,7 @@ def create_app(test_config=None):
             all_actors = Actor.query.order_by(Actor.id).all()
             actors = pagination(page, all_actors)
             for a in actors:
-                actors_formatted.append(a.format)
+                actors_formatted.append(a.format())
         except ConnectionError:
             abort(503)
 
@@ -63,7 +63,7 @@ def create_app(test_config=None):
             all_movies = Movie.query.order_by(Movie.id).all()
             movies = pagination(page, all_movies)
             for m in movies:
-                movies_formatted.append(m.format)
+                movies_formatted.append(m.format())
         except ConnectionError:
             abort(503)
 
