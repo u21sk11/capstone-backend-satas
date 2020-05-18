@@ -1,4 +1,5 @@
 from flask import Flask, request, abort, jsonify
+from datetime import datetime
 
 from models import db, Movie, Actor
 
@@ -68,5 +69,22 @@ def create_app(test_config=None):
             abort(503)
 
         return jsonify(movies_formatted)
+    
+    @app.route('/movies', methods=['POST'])
+    def post_movies():
+        title = request.get_json()['title']
+        date_string = request.get_json()['release_date']
+        release_date = datetime.strptime(date_string, "%d %B, %Y")
+        
+        if title == "" or type(release_date) != 'datetime.datetime':
+            abort(400)
+
+        try:
+            movie = Movie(title=title, release_date=release_date)
+            movie.insert()
+        except ConnectionError:
+            abort(503)
+        
+        return jsonify({'success': True, 'movie': title})
 
     return app
