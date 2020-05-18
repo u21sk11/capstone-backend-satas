@@ -74,9 +74,10 @@ def create_app(test_config=None):
     def post_movies():
         title = request.get_json()['title']
         date_string = request.get_json()['release_date']
-        release_date = datetime.strptime(date_string, "%d %B, %Y")
+        release_date = datetime.strptime(date_string, '%d %B, %Y')
         
         if title == "" or type(release_date) != 'datetime.datetime':
+            print(type(release_date))
             abort(400)
 
         try:
