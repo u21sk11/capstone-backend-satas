@@ -38,6 +38,25 @@ def create_app(test_config=None):
 
         return jsonify(actors_formatted)
     
+    @app.route('/actors/<int:id>', methods=['PATCH'])
+    def patch_actors(id):
+        name = request.get_json()['name']
+        age = request.get_json()['age']
+        gender = request.get_json()['gender']
+        
+        if len(gender) != 1:
+            abort(400)
+        try:
+            actor = Actor.query.get(id)
+            actor.name = name
+            actor.age = age
+            actor.gender = gender
+            actor.patch()
+        except ConnectionError:
+            abort(503)
+        
+        return jsonify({'success': True, 'actor': name})
+    
     @app.route('/actors', methods=['POST'])
     def post_actors():
         name = request.get_json()['name']
@@ -69,6 +88,21 @@ def create_app(test_config=None):
             abort(503)
 
         return jsonify(movies_formatted)
+    
+    @app.route('/movies/<int:id>', methods=['PATCH'])
+    def patch_movies(id):
+        title = request.get_json()['title']
+        date_string = request.get_json()['release_date']
+        release_date = datetime.strptime(date_string, '%d %B, %Y')
+        try:
+            movie = Movie.query.get(id)
+            movie.title = title
+            movie.release_date = release_date
+            movie.patch()
+        except ConnectionError:
+            abort(503)
+        
+        return jsonify({'success': True, 'movie': title})
     
     @app.route('/movies', methods=['POST'])
     def post_movies():

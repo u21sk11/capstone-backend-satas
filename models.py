@@ -18,6 +18,9 @@ class Movie(db.Model):
     def insert(self):
         db.session.add(self)
         db.session.commit()
+    
+    def patch(self):
+        db.session.commit()
 
     def delete(self):
         db.session.delete(self)
@@ -43,6 +46,9 @@ class Actor(db.Model):
 
     def delete(self):
         db.session.delete(self)
+        db.session.commit()
+    
+    def patch(self):
         db.session.commit()
 
     def format(self):
