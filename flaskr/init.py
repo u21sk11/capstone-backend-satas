@@ -60,6 +60,19 @@ def create_app(test_config=None):
         
         return jsonify({'success': True, 'actor': name})
     
+    @app.route('/actors/<int:id>', methods=['DELETE'])
+    def delete_actors(id):
+        try:
+            actor = Actor.query.get(id)
+            if actor is None:
+                abort(404)
+            else:
+                actor.delete()
+        except ConnectionError:
+            abort(503)
+        
+        return jsonify({'success': True, 'deleted_id': id})
+    
     @app.route('/actors', methods=['POST'])
     def post_actors():
         name = request.get_json()['name']
@@ -109,6 +122,19 @@ def create_app(test_config=None):
             abort(503)
         
         return jsonify({'success': True, 'movie': title})
+    
+    @app.route('/movies/<int:id>', methods=['DELETE'])
+    def delete_movies(id):
+        try:
+            movie = Movie.query.get(id)
+            if movie is None:
+                abort(404)
+            else:
+                movie.delete()
+        except ConnectionError:
+            abort(503)
+        
+        return jsonify({'success': True, 'deleted_id': id})
     
     @app.route('/movies', methods=['POST'])
     def post_movies():
