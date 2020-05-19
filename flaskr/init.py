@@ -48,10 +48,13 @@ def create_app(test_config=None):
             abort(400)
         try:
             actor = Actor.query.get(id)
-            actor.name = name
-            actor.age = age
-            actor.gender = gender
-            actor.patch()
+            if actor is None:
+                abort(404)
+            else:
+                actor.name = name
+                actor.age = age
+                actor.gender = gender
+                actor.patch()
         except ConnectionError:
             abort(503)
         
@@ -96,9 +99,12 @@ def create_app(test_config=None):
         release_date = datetime.strptime(date_string, '%d %B, %Y')
         try:
             movie = Movie.query.get(id)
-            movie.title = title
-            movie.release_date = release_date
-            movie.patch()
+            if movie is None:
+                abort(404)
+            else:
+                movie.title = title
+                movie.release_date = release_date
+                movie.patch()
         except ConnectionError:
             abort(503)
         
