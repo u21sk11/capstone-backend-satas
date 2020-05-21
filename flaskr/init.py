@@ -154,9 +154,7 @@ def create_app(test_config=None):
             abort(503)
         
         return jsonify({'success': True, 'movie': title})
-
-    return app
-
+    
     # Error Handling
     @app.errorhandler(422)
     def unprocessable(error):
@@ -190,4 +188,8 @@ def create_app(test_config=None):
         response = jsonify(ex.error)
         response.status_code = ex.status_code
         return response
+
+    return app
+
+    
 
