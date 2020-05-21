@@ -23,7 +23,7 @@ def create_app(test_config=None):
     
     @app.route('/actors', methods=['GET'])
     @requires_auth("get:actors")
-    def get_actors():
+    def get_actors(payload):
         actors_formatted = []
         page = request.args.get('page', 1, type=int)
         try:
@@ -38,7 +38,7 @@ def create_app(test_config=None):
     
     @app.route('/actors/<int:id>', methods=['PATCH'])
     @requires_auth("patch:actor")
-    def patch_actors(id):
+    def patch_actors(payload, id):
         name = request.get_json()['name']
         age = request.get_json()['age']
         gender = request.get_json()['gender']
@@ -61,7 +61,7 @@ def create_app(test_config=None):
     
     @app.route('/actors/<int:id>', methods=['DELETE'])
     @requires_auth("delete:actor")
-    def delete_actors(id):
+    def delete_actors(payload, id):
         try:
             actor = Actor.query.get(id)
             if actor is None:
@@ -75,7 +75,7 @@ def create_app(test_config=None):
     
     @app.route('/actors', methods=['POST'])
     @requires_auth("post:actors")
-    def post_actors():
+    def post_actors(payload):
         name = request.get_json()['name']
         age = request.get_json()['age']
         gender = request.get_json()['gender']
@@ -94,7 +94,7 @@ def create_app(test_config=None):
 
     @app.route('/movies', methods=['GET'])
     @requires_auth("get:movies")
-    def get_movies():
+    def get_movies(payload):
         movies_formatted = []
         page = request.args.get('page', 1, type=int)
         try:
@@ -109,7 +109,7 @@ def create_app(test_config=None):
     
     @app.route('/movies/<int:id>', methods=['PATCH'])
     @requires_auth("patch:movie")
-    def patch_movies(id):
+    def patch_movies(payload, id):
         title = request.get_json()['title']
         date_string = request.get_json()['release_date']
         release_date = datetime.strptime(date_string, '%d %B, %Y')
@@ -128,7 +128,7 @@ def create_app(test_config=None):
     
     @app.route('/movies/<int:id>', methods=['DELETE'])
     @requires_auth("delete:movie")
-    def delete_movies(id):
+    def delete_movies(payload, id):
         try:
             movie = Movie.query.get(id)
             if movie is None:
@@ -142,7 +142,7 @@ def create_app(test_config=None):
     
     @app.route('/movies', methods=['POST'])
     @requires_auth("post:movies")
-    def post_movies():
+    def post_movies(payload):
         title = request.get_json()['title']
         date_string = request.get_json()['release_date']
         release_date = datetime.strptime(date_string, '%d %B, %Y')
