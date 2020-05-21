@@ -2,7 +2,7 @@ from flask import Flask, request, abort, jsonify
 from datetime import datetime
 
 from models import db, Movie, Actor
-from auth import requires_auth
+from auth import requires_auth, AuthError
 
 ITEMS_PER_PAGE = 10
 
@@ -156,3 +156,38 @@ def create_app(test_config=None):
         return jsonify({'success': True, 'movie': title})
 
     return app
+
+    # Error Handling
+    @app.errorhandler(422)
+    def unprocessable(error):
+        return jsonify({
+            "success": False,
+            "error": 422,
+            "message": "unprocessable"
+            }), 422
+
+
+    @app.errorhandler(404)
+    def not_found(error):
+        return jsonify({
+                "success": False,
+                "error": 404,
+                "message": "resource not found"
+                }), 404
+
+
+    @app.errorhandler(503)
+    def network_error(error):
+        return jsonify({
+            "success": False,
+            "error": 503,
+            "message": "issues communicating with the database"
+            }), 503
+
+
+    @app.errorhandler(AuthError)
+    def handle_auth_error(ex):
+        response = jsonify(ex.error)
+        response.status_code = ex.status_code
+        return response
+
