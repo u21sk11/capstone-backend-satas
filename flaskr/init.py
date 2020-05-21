@@ -2,6 +2,7 @@ from flask import Flask, request, abort, jsonify
 from datetime import datetime
 
 from models import db, Movie, Actor
+from auth import requires_auth
 
 ITEMS_PER_PAGE = 10
 
@@ -20,11 +21,8 @@ def create_app(test_config=None):
         response.headers.add('Access-Control-Allow-Methods', 'GET,PATCH,POST,DELETE,OPTIONS')
         return response
     
-    @app.route('/')
-    def index():
-        return jsonify({"message":"hello"})
-
     @app.route('/actors', methods=['GET'])
+    @requires_auth("get:actors")
     def get_actors():
         actors_formatted = []
         page = request.args.get('page', 1, type=int)
@@ -39,6 +37,7 @@ def create_app(test_config=None):
         return jsonify(actors_formatted)
     
     @app.route('/actors/<int:id>', methods=['PATCH'])
+    @requires_auth("patch:actor")
     def patch_actors(id):
         name = request.get_json()['name']
         age = request.get_json()['age']
@@ -61,6 +60,7 @@ def create_app(test_config=None):
         return jsonify({'success': True, 'actor': name})
     
     @app.route('/actors/<int:id>', methods=['DELETE'])
+    @requires_auth("delete:actor")
     def delete_actors(id):
         try:
             actor = Actor.query.get(id)
@@ -74,6 +74,7 @@ def create_app(test_config=None):
         return jsonify({'success': True, 'deleted_id': id})
     
     @app.route('/actors', methods=['POST'])
+    @requires_auth("post:actors")
     def post_actors():
         name = request.get_json()['name']
         age = request.get_json()['age']
@@ -92,6 +93,7 @@ def create_app(test_config=None):
 
 
     @app.route('/movies', methods=['GET'])
+    @requires_auth("get:movies")
     def get_movies():
         movies_formatted = []
         page = request.args.get('page', 1, type=int)
@@ -106,6 +108,7 @@ def create_app(test_config=None):
         return jsonify(movies_formatted)
     
     @app.route('/movies/<int:id>', methods=['PATCH'])
+    @requires_auth("patch:movie")
     def patch_movies(id):
         title = request.get_json()['title']
         date_string = request.get_json()['release_date']
@@ -124,6 +127,7 @@ def create_app(test_config=None):
         return jsonify({'success': True, 'movie': title})
     
     @app.route('/movies/<int:id>', methods=['DELETE'])
+    @requires_auth("delete:movie")
     def delete_movies(id):
         try:
             movie = Movie.query.get(id)
@@ -137,6 +141,7 @@ def create_app(test_config=None):
         return jsonify({'success': True, 'deleted_id': id})
     
     @app.route('/movies', methods=['POST'])
+    @requires_auth("post:movies")
     def post_movies():
         title = request.get_json()['title']
         date_string = request.get_json()['release_date']
