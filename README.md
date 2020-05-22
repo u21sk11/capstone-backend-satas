@@ -202,8 +202,6 @@ POST `/movies`
 
 ```
 
-```
-
 ---
 
 PATCH `/actors/1`
@@ -280,8 +278,6 @@ Error Handlers:
 
 ```
 
-
-
 404 `Not Found`
 
 - Fetched when the resource requested does not exist
@@ -324,4 +320,7 @@ python test_flaskr.py
 ```
 
 Run the postman collections in postman to perfom RBAC tests -> postman_tests
+
+```
+
 ```
