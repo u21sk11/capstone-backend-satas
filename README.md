@@ -64,6 +64,9 @@ Base URL - https://capstone-project-satas.herokuapp.com
 
 ### Roles
 
+Here's the full URL to check that authorisation with AuthO is running:
+[Auth0 Link](https://capstone-project-satas.eu.auth0.com/authorize?audience=capstone&response_type=token&client_id=yttXE5RLww0ZZmT1YqTdqms1b56OQ3tj&redirect_uri=https://127.0.0.1:3000)
+
 Casting Assistant
 
 - Can view actors and movies
