@@ -1,0 +1,377 @@
+{
+	"info": {
+		"_postman_id": "4e3fe23a-c152-41f9-aa9d-b721e86978a7",
+		"name": "capstone-casting-assistant",
+		"description": "A collection to test the endpoints as a casting assistant.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Actors",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "603b919d-4c4a-44a2-9417-9c0cfcd2fd28",
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response test\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response).to.be.an('array').that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://capstone-project-satas.herokuapp.com/actors",
+					"protocol": "https",
+					"host": [
+						"capstone-project-satas",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"actors"
+					]
+				},
+				"description": "A request to retrieve all actors."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Movies",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "698ef1f9-cb21-420b-9fd6-90eadf0b444f",
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response test\", function () {\r",
+							"    var response = pm.response.json();\r",
+							"    pm.expect(response).to.be.an('array').that.is.not.empty;\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://capstone-project-satas.herokuapp.com/movies",
+					"protocol": "https",
+					"host": [
+						"capstone-project-satas",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"movies"
+					]
+				},
+				"description": "A request to retrieve all movies."
+			},
+			"response": []
+		},
+		{
+			"name": "Post a Movie",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4093b193-9d15-43ca-8b01-0f801416a25c",
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Testing a post of a movie\",\n\t\"release_date\": \"21 May, 2020\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://capstone-project-satas.herokuapp.com/movies",
+					"protocol": "https",
+					"host": [
+						"capstone-project-satas",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"movies"
+					]
+				},
+				"description": "A request that adds a new movie to the list."
+			},
+			"response": []
+		},
+		{
+			"name": "Post an Actor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4f5451c5-c8c2-4fa1-8e80-34b780d01485",
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Testing an actor post\",\n\t\"age\": 67,\n\t\"gender\": \"M\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://capstone-project-satas.herokuapp.com/actors",
+					"protocol": "https",
+					"host": [
+						"capstone-project-satas",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"actors"
+					]
+				},
+				"description": "A request that adds a new actor to the list."
+			},
+			"response": []
+		},
+		{
+			"name": "Patch a Movie",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "db5de43d-2803-4af2-adc4-1298a41ccf0c",
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"title\": \"Testing a patch of a movie\",\n\t\"release_date\": \"21 May, 2020\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://capstone-project-satas.herokuapp.com/movies/1",
+					"protocol": "https",
+					"host": [
+						"capstone-project-satas",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"movies",
+						"1"
+					]
+				},
+				"description": "A request that updates a movie."
+			},
+			"response": []
+		},
+		{
+			"name": "Patch an Actor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0098cb52-8e18-42e1-b859-19e01b2c1c02",
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Testing an actor patch\",\n\t\"age\": 67,\n\t\"gender\": \"M\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://capstone-project-satas.herokuapp.com/actors/1",
+					"protocol": "https",
+					"host": [
+						"capstone-project-satas",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"actors",
+						"1"
+					]
+				},
+				"description": "A request that updates an actor."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete an Actor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "68bdce4b-e14d-4ea0-b188-cd68743de5ce",
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://capstone-project-satas.herokuapp.com/actors/1",
+					"protocol": "https",
+					"host": [
+						"capstone-project-satas",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"actors",
+						"1"
+					]
+				},
+				"description": "A request that deletes a selected actor."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete a Movie",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4e65a973-6a1a-407a-8454-70fee2e77bfb",
+						"exec": [
+							"pm.test(\"Status test\", function () {\r",
+							"    pm.response.to.have.status(403);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://capstone-project-satas.herokuapp.com/movies/1",
+					"protocol": "https",
+					"host": [
+						"capstone-project-satas",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"movies",
+						"1"
+					]
+				},
+				"description": "A request that deletes a selected movie."
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjZHdmlrTTZaMGRWdUJwZUdMU3lWVSJ9.eyJpc3MiOiJodHRwczovL2NhcHN0b25lLXByb2plY3Qtc2F0YXMuZXUuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVlYzU4M2Y3YjA2MmFiMGJmZGI5NmEwYiIsImF1ZCI6ImNhcHN0b25lIiwiaWF0IjoxNTkwMDkzODU0LCJleHAiOjE1OTAxODAyNTQsImF6cCI6Inl0dFhFNVJMd3cwWlptVDFZcVRkcW1zMWI1Nk9RM3RqIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyJdfQ.BsfeykWwjp6p5AfGzA27yobapIMFbicWKBAXrVFLQtLw0Zhiz6s797VfycjfyRGLi8Wkekj_eVaOEtoXM-VnZOoyFoHtlACKHeSZ_nhRpw3O7fIC1m05mLKwrFDKdti7fJFiasDteMCFVanch_TBfHw1vZohZMLWu029LGVCt_GyPAmyuDFrv0fM1RmF5Dmp3gb7yQh_JZWkBs7bnT5EhkLmUQKBkwB-NbdhHPF3KA3YIcg6IKIzJSB_-v_7XIBiLxceWfG3BncuEqOnMkz_pMQqIJmuxtO0mgQwC3lGJwhu-YpEPhKj8S-jAsoH_2sykYweAyM3GiK6r5cu_4MEiA",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "7da2303c-defc-4dad-aaf2-bf65979290fe",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "469d3d0d-d465-451f-bf21-7eb289361ff1",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

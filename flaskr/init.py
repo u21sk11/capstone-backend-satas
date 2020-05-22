@@ -156,15 +156,6 @@ def create_app(test_config=None):
         return jsonify({'success': True, 'movie': title})
     
     # Error Handling
-    @app.errorhandler(422)
-    def unprocessable(error):
-        return jsonify({
-            "success": False,
-            "error": 422,
-            "message": "unprocessable"
-            }), 422
-
-
     @app.errorhandler(404)
     def not_found(error):
         return jsonify({
