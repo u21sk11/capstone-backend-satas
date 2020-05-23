@@ -4,10 +4,13 @@ import json
 import datetime
 
 from flaskr.init import create_app
-from models import set_up, Movie, Actor
+from models import set_up, db, Movie, Actor
 
 # Initialise Authentication Token For Testing
-auth_token = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjZHdmlrTTZaMGRWdUJwZUdMU3lWVSJ9.eyJpc3MiOiJodHRwczovL2NhcHN0b25lLXByb2plY3Qtc2F0YXMuZXUuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVlYzU4NzNjMjU0YmE3MGJmNDgzYjM5NiIsImF1ZCI6ImNhcHN0b25lIiwiaWF0IjoxNTkwMTAwNzQyLCJleHAiOjE1OTAxODcxNDIsImF6cCI6Inl0dFhFNVJMd3cwWlptVDFZcVRkcW1zMWI1Nk9RM3RqIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YWN0b3IiLCJkZWxldGU6bW92aWUiLCJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyIsInBhdGNoOmFjdG9yIiwicGF0Y2g6bW92aWUiLCJwb3N0OmFjdG9ycyIsInBvc3Q6bW92aWVzIl19.iv1tpfxUlwmI5Jb4AnhleDYh9EksXQO3r2yj3OxsnndWT9gNS6y9D0zYC9izLxsOeh9B02wQoVBswe0-lRbC1G60sNtfnEYgPhZkwL5weMRWU_VxoAnZHQrmHe4kYM6vCSiL1JRS-wubIpMjMhXuUGlioYqSgUYpXzPfc0lgnL9rCmBZgvlt-HrZhQbV9Fi3RSrXOTeBPVXw2B85QxrH2dSWm4zM3IZlltyJi1qssctteVrguLPNOzf8pzxmalRftU5yPRqKipCTsNGhPaqD8xZHYOBWPnyoECSOUxvF9swbhLlIwJDlOJSXudOOH9LzelLEX716HzH_ReKRkLurQA"
+t1 = "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjZHdmlrTTZaMGRWdUJwZUdMU3lWVSJ9"
+t2 = "eyJpc3MiOiJodHRwczovL2NhcHN0b25lLXByb2plY3Qtc2F0YXMuZXUuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVlYzU4NzNjMjU0YmE3MGJmNDgzYjM5NiIsImF1ZCI6ImNhcHN0b25lIiwiaWF0IjoxNTkwMjM5Mzc1LCJleHAiOjE1OTAzMjU3NzUsImF6cCI6Inl0dFhFNVJMd3cwWlptVDFZcVRkcW1zMWI1Nk9RM3RqIiwic2NvcGUiOiIiLCJwZXJtaXNzaW9ucyI6WyJkZWxldGU6YWN0b3IiLCJkZWxldGU6bW92aWUiLCJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyIsInBhdGNoOmFjdG9yIiwicGF0Y2g6bW92aWUiLCJwb3N0OmFjdG9ycyIsInBvc3Q6bW92aWVzIl19"
+t3 = "IGVQI7ps2n-tBNAHjih8cjZDznmrT5DwQ__wcIzQoWnfo_H48PgYU4Qp7oycifoUmZfXFdNtSBwKr0pERg1rG90Vxri_tXBM0HhnnvyGEJZ890LiNFYx8-kdHqeevgA-5tmDQ5hdZSjXO7_bQhtGHSSTgBQrFivufWPoeG3woSWkRUsXYtAgJob4QJVZwuEOnixLsvnFuBzq7poeuoqRrSXoOBZbrd_t8K0Wgf4CI5xoG0NimFjEbMATIcYqKMXnSKjVwmp8jKI32n9zbET-IBxAf0ToEEjMaEZAfkZv5TTDPN8DXKSYV16jK6c2oRSCTss9I7Eo-vmv36zdhr2iFA"
+auth_token = "{}.{}.{}".format(t1, t2, t3)
 
 
 class CapstoneTestCase(unittest.TestCase):
@@ -83,15 +86,17 @@ class CapstoneTestCase(unittest.TestCase):
     # Delete a Movie
     def test_delete_movie(self):
         # Testing a movie deletion
+        latest_movie = Movie.query.order_by(db.desc(Movie.id)).first()
+
         res = self.client().delete(
-            'https://capstone-project-satas.herokuapp.com/movies/4',
+            'https://capstone-project-satas.herokuapp.com/movies/'+str(latest_movie.id),
             headers={'Authorization': 'Bearer ' + auth_token}
             )
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertEqual(data['deleted_id'], 4)
+        self.assertEqual(data['deleted_id'], latest_movie.id)
 
     def test_404_delete_movie(self):
         # Testing a fail in deleting a movie, due to it not existing
@@ -109,15 +114,16 @@ class CapstoneTestCase(unittest.TestCase):
     # Delete an Actor
     def test_delete_actor(self):
         # Testing an actor deletion
+        latest_actor = Actor.query.order_by(db.desc(Actor.id)).first()
         res = self.client().delete(
-            'https://capstone-project-satas.herokuapp.com/actors/10',
+            'https://capstone-project-satas.herokuapp.com/actors/'+str(latest_actor.id),
             headers={'Authorization': 'Bearer ' + auth_token}
             )
         data = json.loads(res.data)
 
         self.assertEqual(res.status_code, 200)
         self.assertEqual(data['success'], True)
-        self.assertEqual(data['deleted_id'], 10)
+        self.assertEqual(data['deleted_id'], latest_actor.id)
 
     def test_404_delete_actor(self):
         # Testing a fail in deleting an actor

@@ -3,10 +3,14 @@ import json
 from jose import jwt
 from urllib.request import urlopen
 from functools import wraps
+import os
+from dotenv import load_dotenv
 
-AUTH0_DOMAIN = 'capstone-project-satas.eu.auth0.com'
-ALGORITHMS = ['RS256']
-API_AUDIENCE = 'capstone'
+load_dotenv()
+
+AUTH0_DOMAIN = os.getenv("AUTH0_DOMAIN")
+ALGORITHMS = [os.getenv("ALGORITHMS")]
+API_AUDIENCE = os.getenv("API_AUDIENCE")
 
 
 class AuthError(Exception):
@@ -114,7 +118,7 @@ def requires_auth(permission=''):
             token = get_token_auth_header()
             try:
                 payload = verify_decode_jwt(token)
-            except:
+            except Exception:
                 abort(401)
 
             check_permissions(permission, payload)

@@ -5,7 +5,13 @@ db = SQLAlchemy()
 
 
 def set_up(app):
-    app.config["SQLALCHEMY_DATABASE_URI"] = "postgres://przorgkwvdvzvs:6ec48f0258d245a8a6302f7b7bd923d25f1ef086ca1944594474b7850d13860f@ec2-54-217-204-34.eu-west-1.compute.amazonaws.com:5432/d3s52rgbce333f"
+    d = "postgres"
+    user = "przorgkwvdvzvs"
+    password = "6ec48f0258d245a8a6302f7b7bd923d25f1ef086ca1944594474b7850d13860f"
+    host = "ec2-54-217-204-34.eu-west-1.compute.amazonaws.com"
+    port = "5432"
+    lib = "d3s52rgbce333f"
+    app.config["SQLALCHEMY_DATABASE_URI"] = "{}://{}:{}@{}:{}/{}".format(d, user, password, host, port, lib)
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
